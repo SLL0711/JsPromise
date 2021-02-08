@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./myPromise.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+
+        // var p = new Promise(function (res, rej) {
+        //     setTimeout(() => {
+        //         rej('rej')
+        //     }, 2000);
+        // }).catch(function (err) {
+        //     console.log(err)
+        //     return new Promise(function (res, rej) {
+        //         setTimeout(() => {
+        //             res('res')
+        //         }, 2000);
+        //     })
+        // }).then(function (res) {
+        //     console.log(res)
+        // })
+
+        var p = new myPromise(function (res, rej) {
+            setTimeout(() => {
+                console.log('1')
+                // res('1')
+                rej('err')
+            }, 1000);
+        }).then(function (res) {
+            return new myPromise(function (res, rej) {
+                setTimeout(() => {
+                    res('1111')
+                }, 2000);
+            })
+        }, function (err) {
+            console.log(err);
+            return new myPromise(function (res, rej) {
+                setTimeout(() => {
+                    // res('heiheihei')
+                    rej('heiheihei')
+                }, 2000);
+            })
+        }).then(function (res) {
+            console.log(res)
+        }, function (err) {
+            console.log(err)
+        })
+
+    </script>
+
+</body>
+
+</html>
